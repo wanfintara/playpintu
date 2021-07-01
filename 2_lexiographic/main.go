@@ -4,36 +4,25 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 // source: https://www.quora.com/How-would-you-explain-an-algorithm-that-generates-permutations-using-lexicographic-ordering
 
 func main() {
-	// a := []string{"a", "b", "c", "a", "c"}
-	// fmt.Println(a)
-	// s := "abcacb"
 	s, err := getString()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(s)
+	// fmt.Println(s)
 	uniqueSlice := unique(s)
-	fmt.Println(uniqueSlice)
-
-	// aa := []int{0, 1, 2}
-	// fmt.Println(aa)
-	// printLexiogrphicOrder(aa)
+	// fmt.Println(uniqueSlice)
 
 	lexioString(uniqueSlice)
-	// s := "abc"
-	// for _, v := range s {
-	// 	fmt.Println(int(v))
-	// }
 }
 
 func lexioString(arry []string) {
-	// STEP 1
 	largestI := -1
 	for i := 0; i < len(arry)-1; i++ {
 		if getAscii(arry[i]) < getAscii(arry[i+1]) {
@@ -46,7 +35,6 @@ func lexioString(arry []string) {
 		return
 	}
 
-	// STEP 2
 	largestJ := -1
 	for j := 0; j < len(arry); j++ {
 		if getAscii(arry[largestI]) < getAscii(arry[j]) {
@@ -54,10 +42,8 @@ func lexioString(arry []string) {
 		}
 	}
 
-	// STEP 3
 	arry = swapValue(arry, largestI, largestJ)
 
-	// STEP 4: reverse from largestI + 1 to the end of array
 	startArry := make([]string, largestI+1)
 	copy(startArry, arry)
 
@@ -70,8 +56,9 @@ func lexioString(arry []string) {
 	arry = append(startArry, endArry...)
 
 	// Print and recursively looping
-	fmt.Println(arry)
-	// lexioString(arry)
+	s := strings.Join(arry[:], "")
+	fmt.Println(s)
+	lexioString(arry)
 }
 
 func getAscii(s string) (a int) {
